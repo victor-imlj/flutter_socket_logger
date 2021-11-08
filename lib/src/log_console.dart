@@ -211,6 +211,12 @@ class _LogConsoleState extends State<LogConsole> {
               ? _buildLoggerIdWidget()
               : const SizedBox(width: 0, height: 0),
           IconButton(
+              icon: const Icon(Icons.clear_all),
+              onPressed: () {
+                _renderedBuffer.clear();
+                _refreshFilter();
+              }),
+          IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
               setState(() {
