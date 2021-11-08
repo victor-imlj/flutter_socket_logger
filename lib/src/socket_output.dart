@@ -7,18 +7,22 @@ import 'package:logger/logger.dart';
 import 'package:socket_io_client/socket_io_client.dart' as sio;
 import 'package:socket_io_client/socket_io_client.dart';
 
+typedef BindCallback = void Function(bool);
+
 class SocketOutClient {
   final String url;
   final String peer;
   final sio.Socket socket;
+  final BindCallback? onBind;
 
-  SocketOutClient({required this.url, required this.peer})
+  SocketOutClient({required this.url, required this.peer, this.onBind})
       : socket = sio.io(url, OptionBuilder().enableForceNew().build()) {
     socket.onConnect((_) {
       debugPrint('connected to url => $url, id => ${socket.id}');
 
       socket.emitWithAck('bind', peer, ack: (bool ok) {
         debugPrint('bind => [${socket.id} -> $peer] : $ok');
+        if (onBind != null) onBind!(ok);
       });
     });
 
@@ -50,8 +54,9 @@ class SocketOutClient {
 class SocketOutput extends LogOutput {
   final SocketOutClient _client;
 
-  SocketOutput({required String url, required String peer})
-      : _client = SocketOutClient(url: url, peer: peer);
+  SocketOutput(
+      {required String url, required String peer, BindCallback? onBind})
+      : _client = SocketOutClient(url: url, peer: peer, onBind: onBind);
 
   @override
   void output(OutputEvent event) {
