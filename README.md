@@ -63,7 +63,7 @@ $ cp -R build/web  {webroot}
 import 'package:flutter_socket_logger/flutter_socket_logger.dart';
  
 SocketOutput output = SocketOutput(
-        url: serverUrl, //日志转发服务地址，部署在 https://100.118.56.61
+        url: serverUrl, //日志转发服务地址
         peer: peer,     //日志浏览器的loggerId
         onBind: (ok) {  //绑定日志浏览器回调
         });
