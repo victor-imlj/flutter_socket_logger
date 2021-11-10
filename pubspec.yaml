@@ -1,7 +1,7 @@
 name: flutter_socket_logger
-description: A new Flutter package project.
+description: A flutter remote log tool.  It routes logs from your app to a remote log browser.
 version: 0.0.1
-homepage:
+homepage: https://github.com/victor-imlj/flutter_socket_logger
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
